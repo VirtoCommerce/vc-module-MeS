@@ -1,14 +1,11 @@
 ﻿using Mes.Gateway;
 using System;
-using System.Collections.Generic;
 using System.Collections.Specialized;
-using System.Linq;
-using System.Web;
 using VirtoCommerce.Domain.Payment.Model;
 
 namespace MeS.PaymentGatewaysModule.Web.Managers
 {
-	public class MesPaymentMethod : PaymentMethod
+    public class MesPaymentMethod : PaymentMethod
 	{
 		public MesPaymentMethod()
 			: base("Mes")
