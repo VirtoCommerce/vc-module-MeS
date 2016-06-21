@@ -1,114 +1,120 @@
 ﻿using Mes.Gateway;
 using System;
 using System.Collections.Specialized;
+using System.Globalization;
 using VirtoCommerce.Domain.Payment.Model;
 
 namespace MeS.PaymentGatewaysModule.Web.Managers
 {
     public class MesPaymentMethod : PaymentMethod
-	{
-		public MesPaymentMethod()
-			: base("Mes")
-		{
-		}
+    {
+        public MesPaymentMethod()
+            : base("Mes")
+        {
+        }
 
-		private static string MeSProfileIdStoreSetting = "Mes.PaymentGateway.Credentials.ProfileId";
-		private static string MeSProfileKeyStoreSetting = "Mes.PaymentGateway.Credentials.ProfileKey";
+        private static string MeSProfileIdStoreSetting = "Mes.PaymentGateway.Credentials.ProfileId";
+        private static string MeSProfileKeyStoreSetting = "Mes.PaymentGateway.Credentials.ProfileKey";
 
-		public override PaymentMethodType PaymentMethodType
-		{
-			get { return PaymentMethodType.Standard; }
-		}
+        public override PaymentMethodType PaymentMethodType
+        {
+            get { return PaymentMethodType.Standard; }
+        }
 
-		public override PaymentMethodGroupType PaymentMethodGroupType
-		{
-			get { return PaymentMethodGroupType.BankCard; }
-		}
+        public override PaymentMethodGroupType PaymentMethodGroupType
+        {
+            get { return PaymentMethodGroupType.BankCard; }
+        }
 
-		private string ProfileId
-		{
-			get
-			{
-				var retVal = GetSetting(MeSProfileIdStoreSetting);
-				return retVal;
-			}
-		}
+        private string ProfileId
+        {
+            get
+            {
+                return GetSetting(MeSProfileIdStoreSetting);
+            }
+        }
 
-		private string ProfileKey
-		{
-			get
-			{
-				var retVal = GetSetting(MeSProfileKeyStoreSetting);
-				return retVal;
-			}
-		}
+        private string ProfileKey
+        {
+            get
+            {
+                return GetSetting(MeSProfileKeyStoreSetting);
+            }
+        }
 
-		public override ProcessPaymentResult ProcessPayment(ProcessPaymentEvaluationContext context)
-		{
-			var retVal = new ProcessPaymentResult();
+        public override ProcessPaymentResult ProcessPayment(ProcessPaymentEvaluationContext context)
+        {
+            var retVal = new ProcessPaymentResult();
 
-			GatewaySettings settings = new GatewaySettings();
-			settings.setCredentials(ProfileId, ProfileKey)
-				.setVerbose(true)
-				.setHostUrl(GatewaySettings.URL_CERT);
-			Gateway gateway = new Gateway(settings);
+            GatewaySettings settings = new GatewaySettings();
+            settings.setCredentials(ProfileId, ProfileKey)
+                //.setVerbose(true)
+                .setHostUrl(GatewaySettings.URL_CERT);
+            Gateway gateway = new Gateway(settings);
 
-			GatewayRequest request = new GatewayRequest(GatewayRequest.TransactionType.SALE);
-			if (string.IsNullOrEmpty(context.Payment.OuterId))
-			{
-				request.setCardData("4012888812348882", "1216");
-			}
-			else
-			{
-				request.setTokenData(context.Payment.OuterId, string.Empty);
-			}
-			request.setAmount("1.03");
-			GatewayResponse response = gateway.run(request);
+            GatewayRequest request = new GatewayRequest(GatewayRequest.TransactionType.SALE);
+            if (string.IsNullOrEmpty(context.Payment.OuterId))
+            {
+                // request.setCardData("4012888812348882", "1199");
+                request.setCardData(context.BankCardInfo.BankCardNumber,
+                    context.BankCardInfo.BankCardMonth.ToString() + context.BankCardInfo.BankCardYear);
 
-			var tranId = response.getTransactionId();
+                request.setCurrencyCode(context.Payment.Currency);
 
-			var errorCode = response.getErrorCode();
+                if (context.Payment.BillingAddress != null)
+                    request.setBillingAddress(context.Payment.BillingAddress.ToString(), context.Payment.BillingAddress.Zip);
+            }
+            else
+            {
+                request.setTokenData(context.Payment.OuterId, string.Empty);
+            }
+            request.setAmount(context.Order.Sum.ToString(CultureInfo.InvariantCulture));
+            GatewayResponse response = gateway.run(request);
 
-			if(errorCode.Equals("000"))
-			{
-				retVal.OuterId = tranId;
-				retVal.IsSuccess = true;
-				retVal.NewPaymentStatus = PaymentStatus.Pending; //maybe
-			}
-			else
-			{
-				retVal.NewPaymentStatus = PaymentStatus.Voided;
-				retVal.Error = string.Format("Mes error {0}", errorCode);
-			}
+            var tranId = response.getTransactionId();
 
-			return retVal;
-		}
+            var errorCode = response.getErrorCode();
 
-		public override PostProcessPaymentResult PostProcessPayment(PostProcessPaymentEvaluationContext context)
-		{
-			var retVal = new PostProcessPaymentResult();
+            if (errorCode.Equals("000"))
+            {
+                retVal.OuterId = tranId;
+                retVal.IsSuccess = true;
+                retVal.NewPaymentStatus = PaymentStatus.Pending; //maybe
+            }
+            else
+            {
+                retVal.NewPaymentStatus = PaymentStatus.Voided;
+                retVal.Error = string.Format("Mes error {0}", errorCode);
+            }
 
-			return retVal;
-		}
+            return retVal;
+        }
 
-		public override ValidatePostProcessRequestResult ValidatePostProcessRequest(NameValueCollection context)
-		{
-			throw new NotImplementedException();
-		}
+        public override PostProcessPaymentResult PostProcessPayment(PostProcessPaymentEvaluationContext context)
+        {
+            var retVal = new PostProcessPaymentResult();
 
-		public override VoidProcessPaymentResult VoidProcessPayment(VoidProcessPaymentEvaluationContext context)
-		{
-			throw new NotImplementedException();
-		}
+            return retVal;
+        }
 
-		public override CaptureProcessPaymentResult CaptureProcessPayment(CaptureProcessPaymentEvaluationContext context)
-		{
-			throw new NotImplementedException();
-		}
+        public override ValidatePostProcessRequestResult ValidatePostProcessRequest(NameValueCollection context)
+        {
+            throw new NotImplementedException();
+        }
 
-		public override RefundProcessPaymentResult RefundProcessPayment(RefundProcessPaymentEvaluationContext context)
-		{
-			throw new NotImplementedException();
-		}
-	}
+        public override VoidProcessPaymentResult VoidProcessPayment(VoidProcessPaymentEvaluationContext context)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override CaptureProcessPaymentResult CaptureProcessPayment(CaptureProcessPaymentEvaluationContext context)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override RefundProcessPaymentResult RefundProcessPayment(RefundProcessPaymentEvaluationContext context)
+        {
+            throw new NotImplementedException();
+        }
+    }
 }

@@ -1,6 +1,6 @@
-﻿using System;
-using MeS.PaymentGatewaysModule.Web.Managers;
+﻿using MeS.PaymentGatewaysModule.Web.Managers;
 using Microsoft.Practices.Unity;
+using System;
 using VirtoCommerce.Domain.Payment.Services;
 using VirtoCommerce.Platform.Core.Modularity;
 using VirtoCommerce.Platform.Core.Settings;
@@ -26,7 +26,7 @@ namespace MeS.PaymentGatewaysModule.Web
             {
                 Name = "Merchant e-solutions payment gateway",
                 Description = "Merchant e-solutions payment gateway integration",
-                LogoUrl = "http://www.ebs-next.com/images/partners/partners-merchsolutions.jpg",
+                LogoUrl = "Modules/$(MeS.PaymentGateway)/Content/logo.gif",
                 Settings = settings
             };
 
