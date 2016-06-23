@@ -92,14 +92,12 @@ namespace MeS.PaymentGatewaysModule.Web.Managers
 
         public override PostProcessPaymentResult PostProcessPayment(PostProcessPaymentEvaluationContext context)
         {
-            var retVal = new PostProcessPaymentResult();
-
-            return retVal;
+            return new PostProcessPaymentResult();
         }
 
         public override ValidatePostProcessRequestResult ValidatePostProcessRequest(NameValueCollection context)
         {
-            throw new NotImplementedException();
+            return new ValidatePostProcessRequestResult { IsSuccess = false };
         }
 
         public override VoidProcessPaymentResult VoidProcessPayment(VoidProcessPaymentEvaluationContext context)
