@@ -1,6 +1,6 @@
-﻿using System;
-using MeS.PaymentGatewaysModule.Web.Managers;
+﻿using MeS.PaymentGatewaysModule.Web.Managers;
 using Microsoft.Practices.Unity;
+using System;
 using VirtoCommerce.Domain.Payment.Services;
 using VirtoCommerce.Platform.Core.Modularity;
 using VirtoCommerce.Platform.Core.Settings;
@@ -24,9 +24,9 @@ namespace MeS.PaymentGatewaysModule.Web
 
             Func<MesPaymentMethod> meSPaymentMethodFactory = () => new MesPaymentMethod
             {
-                Name = "Merchant e-solutions payment gateway",
-                Description = "Merchant e-solutions payment gateway integration",
-                LogoUrl = "http://www.ebs-next.com/images/partners/partners-merchsolutions.jpg",
+                Name = "Merchant e-Solutions payment gateway",
+                Description = "Merchant e-Solutions Payment Gateway API integration",
+                LogoUrl = "https://raw.githubusercontent.com/VirtoCommerce/vc-module-MeS/dev/MeS.PaymentGatewaysModule.Web/Content/logo.gif",
                 Settings = settings
             };
 
