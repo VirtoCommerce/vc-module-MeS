@@ -24,9 +24,9 @@ namespace MeS.PaymentGatewaysModule.Web
 
             Func<MesPaymentMethod> meSPaymentMethodFactory = () => new MesPaymentMethod
             {
-                Name = "Merchant e-solutions payment gateway",
-                Description = "Merchant e-solutions payment gateway integration",
-                LogoUrl = "Modules/$(MeS.PaymentGateway)/Content/logo.gif",
+                Name = "Merchant e-Solutions payment gateway",
+                Description = "Merchant e-Solutions Payment Gateway API integration",
+                LogoUrl = "https://raw.githubusercontent.com/VirtoCommerce/vc-module-MeS/dev/MeS.PaymentGatewaysModule.Web/Content/logo.gif",
                 Settings = settings
             };
 

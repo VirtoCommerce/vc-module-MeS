@@ -9,7 +9,7 @@ namespace MeS.PaymentGatewaysModule.Web.Managers
     public class MesPaymentMethod : PaymentMethod
     {
         public MesPaymentMethod()
-            : base("Mes")
+            : base("MeS")
         {
         }
 
@@ -55,7 +55,6 @@ namespace MeS.PaymentGatewaysModule.Web.Managers
             GatewayRequest request = new GatewayRequest(GatewayRequest.TransactionType.SALE);
             if (string.IsNullOrEmpty(context.Payment.OuterId))
             {
-                // request.setCardData("4012888812348882", "1199");
                 request.setCardData(context.BankCardInfo.BankCardNumber,
                     context.BankCardInfo.BankCardMonth.ToString() + context.BankCardInfo.BankCardYear);
 
@@ -84,7 +83,7 @@ namespace MeS.PaymentGatewaysModule.Web.Managers
             else
             {
                 retVal.NewPaymentStatus = PaymentStatus.Voided;
-                retVal.Error = string.Format("Mes error {0}", errorCode);
+                retVal.Error = string.Format("MeS error {0}", errorCode);
             }
 
             return retVal;

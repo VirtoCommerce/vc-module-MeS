@@ -8,7 +8,7 @@
     </dependencies>
 
     <title>MeS Payment Gateway</title>
-    <description>APIs and UI for Merchant e-solutions payment gateway</description>
+    <description>APIs and UI for Merchant e-Solutions Payment Gateway API integration</description>
     <authors>
         <author>Virto Commerce</author>
     </authors>
@@ -16,27 +16,27 @@
         <owner>Virto Commerce</owner>
     </owners>
     <projectUrl>http://virtocommerce.com/</projectUrl>
-    <iconUrl>Modules/$(MeS.PaymentGateway)/Content/logo.gif</iconUrl>
+    <iconUrl>https://raw.githubusercontent.com/VirtoCommerce/vc-module-MeS/dev/MeS.PaymentGatewaysModule.Web/Content/logo.gif</iconUrl>
     <releaseNotes>First version.</releaseNotes>
     <copyright>Copyright © 2011-2016 Virto Commerce. All rights reserved</copyright>
-    <tags>mes payment gateway</tags>
+    <tags>MeS payment gateway</tags>
 
     <assemblyFile>MeS.PaymentGatewaysModule.Web.dll</assemblyFile>
     <moduleType>MeS.PaymentGatewaysModule.Web.Module, MeS.PaymentGatewaysModule.Web</moduleType>
 
     <settings>
-        <group name="Payment methods|MeS|Credentials">
+        <group name="Payment methods|MeS">
             <setting>
                 <name>Mes.PaymentGateway.Credentials.ProfileId</name>
                 <valueType>string</valueType>
                 <title>Profile ID</title>
-                <description>Merchant e-solutions profile ID</description>
+                <description>Merchant e-Solutions profile ID</description>
             </setting>
             <setting>
                 <name>Mes.PaymentGateway.Credentials.ProfileKey</name>
                 <valueType>string</valueType>
                 <title>Profile Key</title>
-                <description>Merchant e-solutions profile key</description>
+                <description>Merchant e-Solutions profile key</description>
             </setting>
         </group>
     </settings>
