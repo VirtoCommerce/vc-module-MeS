@@ -6,6 +6,9 @@ Installing the module:
 * Automatically: in VC Manager go to Configuration -> Modules -> MeS Payment Gateway -> Install
 * Manually: download module zip package from https://github.com/VirtoCommerce/vc-module-MeS/releases. In VC Manager go to Configuration -> Modules -> Advanced -> upload module package -> Install.
 
+# Module management and settings UI
+![image](https://cloud.githubusercontent.com/assets/5801549/16561915/634f2ca2-4204-11e6-9a8a-c526db40ff5b.png)
+
 # Settings
 * **Profile ID** - Merchant e-solutions profile ID
 * **Profile Key** - Merchant e-solutions profile key
