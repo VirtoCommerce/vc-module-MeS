@@ -70,15 +70,17 @@ namespace MeS.PaymentGatewaysModule.Web.Managers
             request.setAmount(context.Order.Sum.ToString(CultureInfo.InvariantCulture));
             GatewayResponse response = gateway.run(request);
 
-            var tranId = response.getTransactionId();
+            var transactionId = response.getTransactionId();
 
             var errorCode = response.getErrorCode();
 
             if (errorCode.Equals("000"))
             {
-                retVal.OuterId = tranId;
-                retVal.IsSuccess = true;
-                retVal.NewPaymentStatus = PaymentStatus.Pending; //maybe
+                context.Payment.AuthorizedDate = DateTime.UtcNow;
+                context.Payment.CapturedDate = DateTime.UtcNow;
+                retVal.OuterId = context.Payment.OuterId = transactionId;
+                retVal.NewPaymentStatus = context.Payment.PaymentStatus = PaymentStatus.Paid;
+                retVal.IsSuccess = context.Payment.IsApproved = true;
             }
             else
             {
