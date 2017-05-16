@@ -35,7 +35,7 @@
             </setting>
             <setting>
                 <name>Mes.PaymentGateway.Credentials.ProfileKey</name>
-                <valueType>string</valueType>
+                <valueType>securestring</valueType>
                 <title>Profile Key</title>
                 <description>Merchant e-Solutions profile key</description>
             </setting>
