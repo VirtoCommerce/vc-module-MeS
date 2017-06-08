@@ -16,7 +16,7 @@
     <owners>
         <owner>Virto Commerce</owner>
     </owners>
-    <projectUrl>https://github.com/VirtoCommerce/vc-module-MeS</projectUrl>
+    <projectUrl>https://virtocommerce.com/apps/extensions/merchante-solutions</projectUrl>
     <iconUrl>https://raw.githubusercontent.com/VirtoCommerce/vc-module-MeS/dev/MeS.PaymentGatewaysModule.Web/Content/logo.gif</iconUrl>
     <releaseNotes>First version.</releaseNotes>
     <copyright>Copyright © 2011-2016 Virto Commerce. All rights reserved</copyright>
